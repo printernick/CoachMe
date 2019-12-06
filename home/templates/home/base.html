@@ -24,7 +24,7 @@
         {% block contentStart %}{% endblock %}
 
         <!-- search bar -->
-        <form action = "{% url 'summoner-home' %}"method="POST" class="input-group input-group-lg m-2">
+        <form action = "{% url 'summoner-home' %}"method="GET" class="input-group input-group-lg m-2">
             {% csrf_token %}
             <input type="text" class="form-control" aria-label="Summoner Name" placeholder="Summoner Name" name="summoner_name">
             <div class="input-group-append">

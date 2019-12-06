@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import logging
+import os
 
 from .scripts.summoner import riotRequestFunctions as riot
 posts = [
@@ -26,9 +27,12 @@ def home(request):
     # context = {
     #     'posts': posts
     # }
-    summoner_name = request.POST.get('summoner_name')
-    region = request.POST.get("region")
-    APIKey = #API KEY HERE
+    summoner_name = request.GET.get('summoner_name')
+    region = request.GET.get("region")
+
+    cur_path = os.getcwd()
+    file = open(os.path.join(cur_path, '_info', 'api.txt'), "r")
+    APIKey = file.read()
 
     summoner_data = riot.requestSummonerData(region, summoner_name, APIKey)
 
