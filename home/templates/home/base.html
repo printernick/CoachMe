@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" text="text/css" href="{% static 'home/styles.scss' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/coliff/bootstrap-rfs/bootstrap-rfs.css">
+
+
+
+    {% if title %}
+        <title>{{ title }} | CoachMeLol</title>
+    {% else %}
+        <title>CoachMeLol</title>
+    {% endif %}
+</head>
+<body class="bg-light">
+    <div class="container">
+        {% block contentStart %}{% endblock %}
+
+        <!-- search bar -->
+        <form action = "{% url 'summoner-home' %}"method="POST" class="input-group input-group-lg m-2">
+            {% csrf_token %}
+            <input type="text" class="form-control" aria-label="Summoner Name" placeholder="Summoner Name" name="summoner_name">
+            <div class="input-group-append">
+                <select class="browser-default custom-select custom-select-lg" aria-label="region" name="region">
+                    <option value="na1" selected>NA1</option>
+                    <option value="euw1">EUW1</option>
+                    <option value="eun1">EUN1</option>
+                    <option value="kr">KR</option>
+                    <option value="jp1">JP1</option>
+                    <option value="tr1">TR1</option>
+                    <option value="la1">LA1</option>
+                    <option value="la2">LA2</option>
+                    <option value="oc1">OC1</option>
+                    <option value="br1">BR1</option>
+                    <option value="ru">RU</option>
+                </select>
+                <button type="submit" class="btn btn-primary btn-lg">CoachMe</button>
+            </div>
+        </form>
+
+        {% block contentEnd %}{% endblock %}
+    </div>
+
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- additional jQuery -->
+    <script src="{% static 'home/scripts.js' %}"></script>
+
+</body>
+</html>
