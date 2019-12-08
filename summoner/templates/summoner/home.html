@@ -1,11 +1,11 @@
 {% extends "home/base.html" %}
+{% load static %}
 {% block contentEnd %}
     <h1>Summoner Home!</h1>
 
     <h2>id: {{ summonerData.id }}</h2>
     <p>accountId: {{ summonerData.accountId }} name: {{ summonerData.name }}</p>
-    <p>profileIconId: {{ summonerData.profileIconId }}</p>
-
+    <p>profileIconId: <img src="{% static "summoner/dragontail/9.3.1/img/profileicon/0.png" %}"><img> </p> 
     {% for match in matches %}
         <p>{{ match }}</p>
         <p>{{ match.champion }}</p>

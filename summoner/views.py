@@ -3,6 +3,7 @@ import logging
 import os
 
 from .scripts.summoner import riotRequestFunctions as riot
+from riotwatcher import RiotWatcher, ApiError
 posts = [
     {
         'author': 'Oogie Boogie',
@@ -20,29 +21,35 @@ posts = [
 ]
 
 def home(request):
-    # if request.method == 'POST':
-    #     logging.debug("I am a post request")
-    # else:
-    #     print("goodbye")
-    # context = {
-    #     'posts': posts
-    # }
     summoner_name = request.GET.get('summoner_name')
     region = request.GET.get("region")
 
     cur_path = os.getcwd()
-    file = open(os.path.join(cur_path, '_info', 'api.txt'), "r")
+    file = open(os.path.join(cur_path, '_info', 'api.txt'), "r") #path to api key
     APIKey = file.read()
 
-    summoner_data = riot.requestSummonerData(region, summoner_name, APIKey)
+    watcher = RiotWatcher(APIKey)
+    summoner_data = watcher.summoner.by_name(region, summoner_name)
 
     # if summoner not found
     if "status" in summoner_data:
         return render(request, "summoner/error.html", {"summonerData": {"name": summoner_name}})
 
-    match_list = riot.requestMatchlist(region, summoner_data["accountId"], APIKey)
+    match_list = watcher.match.matchlist_by_account(region, summoner_data["accountId"])
 
-    context = {"summonerData": summoner_data, "matches": match_list}
+    #Static content
+    version = watcher.data_dragon.versions_for_region(region)['v']
+    champions = watcher.data_dragon.champions(version)
+    items = watcher.data_dragon.items(version)
+    profile_icons = watcher.data_dragon.profile_icons(version)
+    summoner_spells = watcher.data_dragon.summoner_spells(version)
+
+    # runes = watcher.data_dragon.runes(version) not working??
+    print(profile_icons)
+
+
+    context = {"summonerData": summoner_data, "matches": match_list, "champions": champions,
+                "items": items, "profile_icons": profile_icons, "summoner_spells": summoner_spells}
 
     return render(request, 'summoner/home.html', context)
 
