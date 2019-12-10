@@ -45,8 +45,6 @@ def home(request):
     summoner_spells = watcher.data_dragon.summoner_spells(version)
 
     # runes = watcher.data_dragon.runes(version) not working??
-    print(profile_icons)
-
 
     context = {"summonerData": summoner_data, "matches": match_list, "champions": champions,
                 "items": items, "profile_icons": profile_icons, "summoner_spells": summoner_spells}
