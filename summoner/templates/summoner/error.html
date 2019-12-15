@@ -1,4 +1,15 @@
 {% extends "home/base.html" %}
 {% block contentEnd %}
-    <p class="alert alert-danger">Error! {{ summonerData.name }} not found. Did you select the right region?</p>
+    <p class="alert alert-danger">Error! 
+
+        <!-- Invalid API key -->
+        {% if status == 403 %}
+            Api Key is invalid. Try again later.
+        <!-- Invalid summoner name -->
+        {% elif status == 404 %}
+            {{ summonerData.name }} not found. Did you select the right region?
+        {% else %}
+            Unknown error as occurred.
+        {% endif %}
+    </p>
 {% endblock contentEnd %}

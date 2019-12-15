@@ -5,11 +5,23 @@
 {% block contentEnd %}
     
     <div class="row border border-primary">
-        <!-- Summoner Info -->
-        <div class="col-sm-3 border-danger">
-            {% with 'summoner/dragontail/9.3.1/img/profileicon/'|addstr:summonerData.profileIconId|addstr:'.png' as profileIconUrl %}
-                <img src="{% static profileIconUrl %}" class="img-fluid"><img> 
-            {% endwith %}
+        
+        <div class="col-sm-3 justify-content-center align-items-center border-danger">
+            <!-- Summoner Info -->
+            <div class="row">
+                <div class="col">
+                    {% with 'summoner/dragontail/9.3.1/img/profileicon/'|addstr:summonerData.profileIconId|addstr:'.png' as profileIconUrl %}
+                        <img src="{% static profileIconUrl %}" class="img-fluid"><img> 
+                    {% endwith %}
+                </div>
+            </div>
+            <!-- League info -->
+            <div class="row">
+                <div class="col">
+                    {% for league in leagues %}
+                    {% endfor %}
+                </div>
+            </div>
         </div>
         <div class="col-sm-3 text-center border border-danger">
             <div class="row border border-warning">
@@ -25,35 +37,15 @@
         </div>
         <!-- Match History -->
         <div class="col-sm-6 border border-danger">
-            <p>Sample match</p>
-            <p>Sample match</p>
-            <p>Sample match</p>
-            <p>Sample match</p>
-            <p>Sample match</p>
-            <p>Sample match</p>
-            <p>Sample match</p>
-            <p>Sample match</p>
-            <p>Sample match</p>
-
-            <!-- <div class="row">
-                <div class="col">
-                    
+            {% for match in matches %}
+                <div class="row">
+                    <div class="col">
+                        <p>{{ match }}</p>
+                    </div>
                 </div>
-                <p>Sample Info</p>
-            </div>
-            <div class="row">
-                <p>Sample Info</p>
-            </div>
-            <div class="row">
-                <p>Sample Info</p>
-            </div>
-            <div class="row">
-                <p>Sample Info</p>
-            </div>
-            <div class="row">
-                <p>Sample Info</p>
-            </div>
-        </div> -->
+            {% endfor %}
+
+        </div>
 
     </div>
     
