@@ -34,7 +34,6 @@ def home(request):
         summoner_data = watcher.summoner.by_name(region, summoner_name)
     except ApiError as e:
         status_code = e.response.status_code
-        
         return render(request, "summoner/error.html", {"summonerData": {"name": summoner_name}, "status": status_code})
 
     # if summoner not found

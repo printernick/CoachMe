@@ -6,10 +6,9 @@
     
     <div class="row border border-primary">
         
-        <div class="col-sm-3 justify-content-center align-items-center border-danger">
-            <!-- Summoner Info -->
+        <div class="col-sm-3 border-danger">
             <div class="row">
-                <div class="col">
+                <div class="col text-center">
                     {% with 'summoner/dragontail/9.3.1/img/profileicon/'|addstr:summonerData.profileIconId|addstr:'.png' as profileIconUrl %}
                         <img src="{% static profileIconUrl %}" class="img-fluid"><img> 
                     {% endwith %}
@@ -17,9 +16,22 @@
             </div>
             <!-- League info -->
             <div class="row">
-                <div class="col">
-                    {% for league in leagues %}
-                    {% endfor %}
+                <div class="col text-center">
+                    <div>
+                        {% for league in leagues %}
+                            {% if league.queueType == "RANKED_FLEX_SR" %}
+                                <p>Flex Rank</p>
+                            {% elif league.queueType == "RANKED_SOLO_5x5" %}
+                                <p>Solo Rank</p>
+                            {% endif %}
+                            <p>{{ league.tier }} {{league.rank }}</p>
+                            {% with 'summoner/emblems/Emblem_'|addstr:league.tier|addstr:'.png' as tierIconUrl %}
+                                <img src="{% static tierIconUrl %}" class="img-fluid"><img> 
+                            {% endwith %}
+                            
+                        {% endfor %}
+                        <!-- |addstr:league.tier|addstr:'.png' -->
+                    </div>
                 </div>
             </div>
         </div>
