@@ -1,6 +1,7 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% load summoner_extras %}
+{% load mathfilters %}
 
 {% block contentEnd %}
     
@@ -17,25 +18,41 @@
             <!-- League info -->
             <div class="row">
                 <div class="col text-center">
-                    <div>
-                        {% for league in leagues %}
+                    {% for league in leagues %}
+                        <div class="border border-dark">
                             {% if league.queueType == "RANKED_FLEX_SR" %}
                                 <p>Flex Rank</p>
                             {% elif league.queueType == "RANKED_SOLO_5x5" %}
                                 <p>Solo Rank</p>
                             {% endif %}
-                            <p>{{ league.tier }} {{league.rank }}</p>
+                            <p class="d-inline">{{ league.tier }} {{league.rank }}</p>
+                            <p class="d-inline">{{ league.leaguePoints }} LP</p>
+                            <br>
+                            <p class="d-inline font-weight-bold">W:</p> <p class="d-inline">{{league.wins }}</p> 
+                            <p class="d-inline font-weight-bold">L:</p> <p class="d-inline">{{league.losses }}</p>
+                            {% with league.wins|add:league.losses as totalGames %}
+                                {% with league.wins|div:totalGames|floatformat:2 as floatValue %}
+                                    {% widthratio floatValue 1 100 as winRate %}
+                                        {% if winRate|add:"0" >= 55 %}
+                                            <p class="d-inline text-primary">
+                                        {% elif winRate|add:"0" < 50 %}
+                                            <p class="d-inline text-danger">
+                                        {% else %}
+                                            <p class="d-inline text-dark">
+                                        {% endif %}
+                                        {{ winRate }}%</p>
+                                {% endwith %}
+                            {% endwith %}
                             {% with 'summoner/emblems/Emblem_'|addstr:league.tier|addstr:'.png' as tierIconUrl %}
                                 <img src="{% static tierIconUrl %}" class="img-fluid"><img> 
                             {% endwith %}
-                            
-                        {% endfor %}
+                        </div>
+                    {% endfor %}
                         <!-- |addstr:league.tier|addstr:'.png' -->
-                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 text-center border border-danger">
+        <div class="col-sm-2 text-center border border-danger">
             <div class="row border border-warning">
                 <div class="col">
                     <p>{{ summonerData.name }}</p>
@@ -48,7 +65,7 @@
             </div>
         </div>
         <!-- Match History -->
-        <div class="col-sm-6 border border-danger">
+        <div class="col-sm-7 border border-danger">
             {% for match in matches %}
                 <div class="row">
                     <div class="col">
