@@ -48,7 +48,6 @@
                             {% endwith %}
                         </div>
                     {% endfor %}
-                        <!-- |addstr:league.tier|addstr:'.png' -->
                 </div>
             </div>
         </div>
@@ -69,7 +68,7 @@
             {% for match in matches %}
                 <div class="row">
                     <div class="col">
-                        <p>{{ match }}</p>
+                        <p>{{ match.champion }}</p>
                     </div>
                 </div>
             {% endfor %}
