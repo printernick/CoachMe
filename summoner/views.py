@@ -25,7 +25,7 @@ def home(request):
     if "status" in summoner_data:
         return render(request, "summoner/error.html", {"summonerData": {"name": summoner_name}})
 
-    match_list = watcher.match.matchlist_by_account(region, summoner_data["accountId"])['matches']
+    match_list = watcher.match.matchlist_by_account(region, summoner_data["accountId"], end_index=25)['matches']
     matches = {}
     champion_ids = {}
     for match in match_list[:min(25, len(match_list))]:
@@ -38,7 +38,6 @@ def home(request):
                 if id not in champion_ids:
                     champion_json = riot.getStaticChampionInfo(id)
                     champion_ids[id] = champion_json
-        
 
     league_data = watcher.league.by_summoner(region, summoner_data["id"])
 

@@ -68,7 +68,10 @@
             {% for match in matches %}
                 <div class="row">
                     <div class="col">
-                        <p>{{ match.champion }}</p>
+                        {% with champion_ids|getattr:'75'|getattr:'name' as champ %}
+                            <p>{{ champ }}</p>
+                        {% endwith %}
+                        
                     </div>
                 </div>
             {% endfor %}
