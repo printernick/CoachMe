@@ -67,9 +67,12 @@
         <div class="col-sm-7 border border-danger">
             {% for match in matches %}
                 <div class="row">
-                    <div class="col">
-                        {% with champion_ids|getattr:'75'|getattr:'name' as champ %}
-                            <p>{{ champ }}</p>
+                    <div class="col border border-dark">
+                        {% with champion_ids|getattr:'75'|getattr:'name' as champ_name %}
+                            {% with 'summoner/dragontail/9.3.1/img/champion/'|addstr:champ_name|addstr:'.png' as  championIconUrl %}
+                                <img src="{% static championIconUrl %}"></img>
+                            {% endwith %}
+                                <p>{{ champ_name }}</p>
                         {% endwith %}
                         
                     </div>
