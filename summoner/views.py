@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Champion_Id
 import logging
 import os
 
@@ -52,7 +53,7 @@ def home(request):
 
     context = {"summonerData": summoner_data, "matches": match_list, "leagues": league_data, 
                 "champions": champions, "items": items, "profile_icons": profile_icons, 
-                "summoner_spells": summoner_spells, "champion_ids": champion_ids}
+                "summoner_spells": summoner_spells, "champion_ids": Champion_Id.objects.in_bulk()}
 
     return render(request, 'summoner/home.html', context)
 
